@@ -115,6 +115,6 @@ theme: redefine
 
 deploy:
  type: git
- repo: https://github.com/yu3034/yu3034.github.io.git
+ repo: https://github.com/yu3034/yu3034.github.io
  branch: master
 
