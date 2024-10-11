@@ -26,7 +26,7 @@
 <meta property="og:description" content="import pandas as pdimport matplotlib.pyplot as pltplt.rcParams[‘font.sans-serif’]&#x3D;[‘SimHei’]plt.rcParams[‘axes.unicode_minus’]&#x3D;False #读取 Excel 文件df &#x3D; pd.read_excel(‘豆瓣排行榜爱情.xlsx’) 1regi">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-10-11T08:09:49.000Z">
-<meta property="article:modified_time" content="2024-10-11T08:14:42.267Z">
+<meta property="article:modified_time" content="2024-10-11T08:18:24.025Z">
 <meta property="article:author" content="yu">
 <meta name="twitter:card" content="summary">
     
@@ -636,8 +636,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-10-11 16:14:42</span>
-            <span class="mobile">2024-10-11 16:14:42</span>
+            <span class="desktop">2024-10-11 16:18:24</span>
+            <span class="mobile">2024-10-11 16:18:24</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -683,6 +683,12 @@
 <p>#显示图形<br>plt.show()</p>
 <h1 id="4"><a href="#4" class="headerlink" title="4"></a>4</h1><p>df[‘year’] &#x3D; df[‘date’].apply(lambda x: int(x.split(‘-‘)[0])) # 提取年份并转换为整数<br>bins &#x3D; [0, 1980, 2000, 2020, 2024]<br>labels &#x3D; [‘1980之前’, ‘1980-2000’, ‘2000-2020’, ‘2020之后’]<br>year_distribution &#x3D; df[‘year’].value_counts(bins&#x3D;bins, normalize&#x3D;False).sort_index()<br>plt.figure(figsize&#x3D;(10, 6))  #设置图形大小<br>year_distribution.plot(kind&#x3D;’bar’, color&#x3D;’skyblue’)  # 绘制柱状图</p>
 <p>plt.title(‘不同年份区间的电影数量统计’)# 设置图形的标题和坐标轴标签<br>plt.xlabel(‘年份区间’)<br>plt.ylabel(‘电影数量’)<br>plt.xticks(ticks&#x3D;range(len(labels)), labels&#x3D;labels, rotation&#x3D;0)  # 正确设置x轴标签顺序<br>plt.show()# 显示图形</p>
+<p>import pandas as pd<br>import matplotlib.pyplot as plt<br>import pandas as pd<br>from itertools import cycle<br>#读取 Excel 文件<br>df &#x3D; pd.read_excel(‘新书热卖榜.xlsx’)</p>
+<p>plt.rcParams[‘font.sans-serif’]&#x3D;[‘SimHei’]<br>plt.rcParams[‘axes.unicode_minus’]&#x3D;False</p>
+<h1 id="1-1"><a href="#1-1" class="headerlink" title="1"></a>1</h1><p>bins &#x3D; [0, 60, 80, 100, float(‘inf’)]  # 定义价格区间和标签 使用 float(‘inf’) 表示无穷大<br>labels &#x3D; [‘小于60’, ‘60-80’, ‘80-100’, ‘大于100’]<br>#根据价格区间分组统计书籍数量<br>price_distribution &#x3D; df[‘price’].value_counts(bins&#x3D;bins, normalize&#x3D;False).sort_index()<br>plt.figure(figsize&#x3D;(10, 6))  #设置图形大小<br>price_distribution.plot(kind&#x3D;’bar’, color&#x3D;’skyblue’)  # 绘制柱状图<br>plt.title(‘书籍价格分布’)# 设置图形的标题和坐标轴标签<br>plt.xlabel(‘价格区间’)<br>plt.ylabel(‘书籍数量’)<br>plt.xticks(ticks&#x3D;range(len(labels)), labels&#x3D;labels, rotation&#x3D;0)  # 正确设置x轴标签顺序<br>plt.show()# 显示图形</p>
+<h1 id="2-1"><a href="#2-1" class="headerlink" title="2"></a>2</h1><p>#推荐百分比格式为 “xx%”，使用正则表达式提取数字<br>df[‘recommed_value’] &#x3D; df[‘recommed’].str.extract(r’(\d+.?\d*)%’)<br>#将提取出的数字转换为数值类型<br>df[‘recommed_value’] &#x3D; pd.to_numeric(df[‘recommed_value’])<br>#计算每个推荐百分比的书籍数量<br>recommed_count &#x3D; df[‘recommed_value’].value_counts().sort_index()<br>plt.figure(figsize&#x3D;(8, 8))  # 设置图形大小 #开始绘制饼状图<br>plt.pie(recommed_count, labels&#x3D;recommed_count.index, autopct&#x3D;’%1.1f%%’, startangle&#x3D;140)<br>plt.title(‘推荐百分比分布’)  # 设置标题<br>plt.axis(‘equal’)  # 设置x轴和y轴长度相等，确保饼图是圆形<br>plt.show()# 显示图形</p>
+<h1 id="3-1"><a href="#3-1" class="headerlink" title="3"></a>3</h1><p>bins &#x3D; [0, 2, 4, 6, 8, 10] #定义折扣区间和标签<br>labels &#x3D; [‘0-2’, ‘2-4’, ‘4-6’, ‘6-8’, ‘8-10’]<br>#使用 cut 函数将 discount 列的值分配到相应的区间<br>df[‘discount_group’] &#x3D; pd.cut(df[‘discount’], bins&#x3D;bins, labels&#x3D;labels, right&#x3D;False)<br>discount_count &#x3D; df[‘discount_group’].value_counts().sort_index()# 计算每个区间的书籍数量<br>plt.figure(figsize&#x3D;(10, 6))  # 设置图形大小<br>discount_count.plot(kind&#x3D;’bar’)  # 绘制柱状图</p>
+<p>plt.title(‘书籍折扣区间分布’)  # 设置标题<br>plt.xlabel(‘折扣区间’)  # 设置x轴标签<br>plt.ylabel(‘书籍数量’)  # 设置y轴标签<br>plt.xticks(rotation&#x3D;45)  # 旋转x轴标签，便于阅读<br>plt.tight_layout()  # 调整布局以适应标签<br>plt.show() # 显示图形</p>
 
         </div>
 
@@ -697,7 +703,7 @@
         
             <li>
                 <strong>更新于
-                    :</strong> 2024-10-11 16:14:42
+                    :</strong> 2024-10-11 16:18:24
             </li>
         
         <li>
@@ -798,7 +804,7 @@
     <div class="post-toc">
         <div class="toc-title">目录</div>
         <div class="page-title">pachong</div>
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1"><span class="nav-text">1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2"><span class="nav-text">2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3"><span class="nav-text">3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4"><span class="nav-text">4</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1"><span class="nav-text">1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2"><span class="nav-text">2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3"><span class="nav-text">3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4"><span class="nav-text">4</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-1"><span class="nav-text">1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-1"><span class="nav-text">2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-1"><span class="nav-text">3</span></a></li></ol>
 
     </div>
 </div>
