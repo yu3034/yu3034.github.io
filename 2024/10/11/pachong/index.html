@@ -26,7 +26,7 @@
 <meta property="og:description" content="import pandas as pdimport matplotlib.pyplot as pltplt.rcParams[‘font.sans-serif’]&#x3D;[‘SimHei’]plt.rcParams[‘axes.unicode_minus’]&#x3D;False #读取 Excel 文件df &#x3D; pd.read_excel(‘豆瓣排行榜爱情.xlsx’) 1regi">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-10-11T08:09:49.000Z">
-<meta property="article:modified_time" content="2024-10-11T08:18:24.025Z">
+<meta property="article:modified_time" content="2024-10-11T08:29:39.693Z">
 <meta property="article:author" content="yu">
 <meta name="twitter:card" content="summary">
     
@@ -636,8 +636,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-10-11 16:18:24</span>
-            <span class="mobile">2024-10-11 16:18:24</span>
+            <span class="desktop">2024-10-11 16:29:39</span>
+            <span class="mobile">2024-10-11 16:29:39</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -683,12 +683,35 @@
 <p>#显示图形<br>plt.show()</p>
 <h1 id="4"><a href="#4" class="headerlink" title="4"></a>4</h1><p>df[‘year’] &#x3D; df[‘date’].apply(lambda x: int(x.split(‘-‘)[0])) # 提取年份并转换为整数<br>bins &#x3D; [0, 1980, 2000, 2020, 2024]<br>labels &#x3D; [‘1980之前’, ‘1980-2000’, ‘2000-2020’, ‘2020之后’]<br>year_distribution &#x3D; df[‘year’].value_counts(bins&#x3D;bins, normalize&#x3D;False).sort_index()<br>plt.figure(figsize&#x3D;(10, 6))  #设置图形大小<br>year_distribution.plot(kind&#x3D;’bar’, color&#x3D;’skyblue’)  # 绘制柱状图</p>
 <p>plt.title(‘不同年份区间的电影数量统计’)# 设置图形的标题和坐标轴标签<br>plt.xlabel(‘年份区间’)<br>plt.ylabel(‘电影数量’)<br>plt.xticks(ticks&#x3D;range(len(labels)), labels&#x3D;labels, rotation&#x3D;0)  # 正确设置x轴标签顺序<br>plt.show()# 显示图形</p>
-<p>import pandas as pd<br>import matplotlib.pyplot as plt<br>import pandas as pd<br>from itertools import cycle<br>#读取 Excel 文件<br>df &#x3D; pd.read_excel(‘新书热卖榜.xlsx’)</p>
+<h1 id="二"><a href="#二" class="headerlink" title="二"></a>二</h1><p>import pandas as pd<br>import matplotlib.pyplot as plt<br>import pandas as pd<br>from itertools import cycle<br>#读取 Excel 文件<br>df &#x3D; pd.read_excel(‘新书热卖榜.xlsx’)</p>
 <p>plt.rcParams[‘font.sans-serif’]&#x3D;[‘SimHei’]<br>plt.rcParams[‘axes.unicode_minus’]&#x3D;False</p>
 <h1 id="1-1"><a href="#1-1" class="headerlink" title="1"></a>1</h1><p>bins &#x3D; [0, 60, 80, 100, float(‘inf’)]  # 定义价格区间和标签 使用 float(‘inf’) 表示无穷大<br>labels &#x3D; [‘小于60’, ‘60-80’, ‘80-100’, ‘大于100’]<br>#根据价格区间分组统计书籍数量<br>price_distribution &#x3D; df[‘price’].value_counts(bins&#x3D;bins, normalize&#x3D;False).sort_index()<br>plt.figure(figsize&#x3D;(10, 6))  #设置图形大小<br>price_distribution.plot(kind&#x3D;’bar’, color&#x3D;’skyblue’)  # 绘制柱状图<br>plt.title(‘书籍价格分布’)# 设置图形的标题和坐标轴标签<br>plt.xlabel(‘价格区间’)<br>plt.ylabel(‘书籍数量’)<br>plt.xticks(ticks&#x3D;range(len(labels)), labels&#x3D;labels, rotation&#x3D;0)  # 正确设置x轴标签顺序<br>plt.show()# 显示图形</p>
 <h1 id="2-1"><a href="#2-1" class="headerlink" title="2"></a>2</h1><p>#推荐百分比格式为 “xx%”，使用正则表达式提取数字<br>df[‘recommed_value’] &#x3D; df[‘recommed’].str.extract(r’(\d+.?\d*)%’)<br>#将提取出的数字转换为数值类型<br>df[‘recommed_value’] &#x3D; pd.to_numeric(df[‘recommed_value’])<br>#计算每个推荐百分比的书籍数量<br>recommed_count &#x3D; df[‘recommed_value’].value_counts().sort_index()<br>plt.figure(figsize&#x3D;(8, 8))  # 设置图形大小 #开始绘制饼状图<br>plt.pie(recommed_count, labels&#x3D;recommed_count.index, autopct&#x3D;’%1.1f%%’, startangle&#x3D;140)<br>plt.title(‘推荐百分比分布’)  # 设置标题<br>plt.axis(‘equal’)  # 设置x轴和y轴长度相等，确保饼图是圆形<br>plt.show()# 显示图形</p>
 <h1 id="3-1"><a href="#3-1" class="headerlink" title="3"></a>3</h1><p>bins &#x3D; [0, 2, 4, 6, 8, 10] #定义折扣区间和标签<br>labels &#x3D; [‘0-2’, ‘2-4’, ‘4-6’, ‘6-8’, ‘8-10’]<br>#使用 cut 函数将 discount 列的值分配到相应的区间<br>df[‘discount_group’] &#x3D; pd.cut(df[‘discount’], bins&#x3D;bins, labels&#x3D;labels, right&#x3D;False)<br>discount_count &#x3D; df[‘discount_group’].value_counts().sort_index()# 计算每个区间的书籍数量<br>plt.figure(figsize&#x3D;(10, 6))  # 设置图形大小<br>discount_count.plot(kind&#x3D;’bar’)  # 绘制柱状图</p>
 <p>plt.title(‘书籍折扣区间分布’)  # 设置标题<br>plt.xlabel(‘折扣区间’)  # 设置x轴标签<br>plt.ylabel(‘书籍数量’)  # 设置y轴标签<br>plt.xticks(rotation&#x3D;45)  # 旋转x轴标签，便于阅读<br>plt.tight_layout()  # 调整布局以适应标签<br>plt.show() # 显示图形</p>
+<h1 id="三"><a href="#三" class="headerlink" title="三"></a>三</h1><p>import pandas as pd<br>import matplotlib.pyplot as plt<br>plt.rcParams[‘font.sans-serif’]&#x3D;[‘SimHei’]<br>plt.rcParams[‘axes.unicode_minus’]&#x3D;False</p>
+<p>#读取Excel文件<br>df &#x3D; pd.read_excel(‘影评信息.xlsx’)</p>
+<h1 id="1-2"><a href="#1-2" class="headerlink" title="1"></a>1</h1><p>average_votes &#x3D; df.groupby(‘star’)[‘vote’].mean() #各区间求平均值<br>plt.figure(figsize&#x3D;(10, 6))  # 设置图形大小<br>bar_plot &#x3D; plt.bar(average_votes.index, average_votes.values)</p>
+<p>#设置X轴和Y轴的标签<br>plt.xlabel(‘星数’)<br>plt.ylabel(‘平均有用数’)<br>plt.title(‘不同星级平均有用数’)<br>#显示图形<br>plt.show()</p>
+<h1 id="2-2"><a href="#2-2" class="headerlink" title="2"></a>2</h1><p>df[‘year’] &#x3D; df[‘comment_time’].apply(lambda x: int(x.split(‘-‘)[0])) #提取年份<br>average_votes_by_year &#x3D; df.groupby(‘year’)[‘vote’].mean() #计算每个年份的平均评分<br>plt.figure(figsize&#x3D;(12, 6))  #设置图形大小<br>plt.plot(average_votes_by_year.index, average_votes_by_year.values, marker&#x3D;’o’)</p>
+<p>plt.xlabel(‘年份’)<br>plt.ylabel(‘平均有用数’)<br>plt.title(‘随时间平均有用数的变化趋势’)<br>#显示图形<br>plt.show()</p>
+<h1 id="3-2"><a href="#3-2" class="headerlink" title="3"></a>3</h1><p>#确保’star’列是字符串格式，以便正确地作为标签显示<br>#df[‘star’] &#x3D; df[‘star’].astype(str)<br>#计算每个星级的数量<br>star_counts &#x3D; df[‘star’].value_counts()<br>#绘制饼状图<br>plt.figure(figsize&#x3D;(10, 8))  # 设置图形大小<br>plt.pie(star_counts, labels&#x3D;star_counts.index, autopct&#x3D;’%1.1f%%’, startangle&#x3D;140)<br>#设置图形标题<br>plt.title(‘各星级数量占比’)<br>#优化饼状图的显示效果<br>plt.axis(‘equal’)  # 确保饼状图是圆形的<br>#显示图形<br>plt.show()</p>
+<h1 id="四"><a href="#四" class="headerlink" title="四"></a>四</h1><p>import pandas as pd<br>import matplotlib.pyplot as plt<br>plt.rcParams[‘font.sans-serif’]&#x3D;[‘SimHei’]<br>plt.rcParams[‘axes.unicode_minus’]&#x3D;False<br>import ast  # 导入ast模块来评估字符串表达式</p>
+<p>#读取Excel文件<br>df &#x3D; pd.read_excel(‘智联信息.xlsx’)</p>
+<h1 id="1-3"><a href="#1-3" class="headerlink" title="1"></a>1</h1><p>#将salary列的字符串转换为整数列表<br>df[‘salary’] &#x3D; df[‘salary’].apply(ast.literal_eval)<br>df[‘average_salary’] &#x3D; df[‘salary’].apply(lambda x: (x[0] + x[1]) &#x2F; 2) #计算salary的平均值<br>bins &#x3D; [0,8000, 12000, 16000, 20000,float(‘inf’)]  # 定义平均薪资区间和标签 使用 float(‘inf’) 表示无穷大<br>labels &#x3D; [ ‘8000以下’, ‘8000-12000’, ‘12000-16000’, ‘16000-20000’, ‘20000以上’]<br>#根据薪资区间分组统计数量<br>salary_distribution &#x3D; df[‘average_salary’].value_counts(bins&#x3D;bins, normalize&#x3D;False).sort_index()<br>plt.figure(figsize&#x3D;(10, 6))  #设置图形大小<br>salary_distribution.plot(kind&#x3D;’bar’, color&#x3D;’skyblue’)  # 绘制柱状图</p>
+<p>plt.title(‘薪资区间分布情况’)# 设置图形的标题和坐标轴标签<br>plt.xlabel(‘薪资区间’)<br>plt.ylabel(‘数量’)<br>plt.xticks(ticks&#x3D;range(len(labels)), labels&#x3D;labels, rotation&#x3D;0)  # 正确设置x轴标签顺序<br>plt.show()# 显示图形</p>
+<h1 id="2-3"><a href="#2-3" class="headerlink" title="2"></a>2</h1><p>character_counts &#x3D; df[‘character’].value_counts() #对character列进行计数<br>plt.figure(figsize&#x3D;(10, 8))  # 设置图形大小<br>plt.pie(character_counts, labels&#x3D;character_counts.index, autopct&#x3D;’%1.1f%%’, startangle&#x3D;140)</p>
+<p>#设置图形标题<br>plt.title(“不同企业性质占比”)<br>#显示图形<br>plt.show()</p>
+<h1 id="3-3"><a href="#3-3" class="headerlink" title="3"></a>3</h1><p>#将salary列的字符串转换为整数列表，并计算平均值<br>df[‘average_salary’] &#x3D; df[‘salary’].apply(lambda x: (x[0] + x[1]) &#x2F; 2)<br>#根据character列分组并计算每组的平均salary<br>grouped_avg_salary &#x3D; df.groupby(‘character’)[‘average_salary’].mean()<br>#准备柱状图的数据<br>characters &#x3D; list(grouped_avg_salary.index)  # character列表<br>avg_salaries &#x3D; list(grouped_avg_salary.values)  # 平均salary列表<br>#绘制柱状图<br>plt.figure(figsize&#x3D;(12, 6))  # 设置图形大小<br>plt.bar(characters, avg_salaries, color&#x3D;’skyblue’)<br>#设置X轴和Y轴的标签<br>plt.xlabel(‘公司性质’)<br>plt.ylabel(‘平均薪资’)<br>plt.title(‘不同公司性质平均薪资’)<br>#显示图形<br>plt.show()</p>
+<h1 id="4-1"><a href="#4-1" class="headerlink" title="4"></a>4</h1><p>labels &#x3D; [ ‘学历不限’, ‘大专’, ‘本科’, ‘硕士’]<br>df[‘average_salary’] &#x3D; df[‘salary’].apply(lambda x: (x[0] + x[1]) &#x2F; 2) #计算平均值<br>grouped_avg_salary &#x3D; df.groupby(‘education’)[‘average_salary’].mean().reindex(labels)<br>plt.plot(grouped_avg_salary.index, grouped_avg_salary.values, marker&#x3D;’o’, linestyle&#x3D;’-‘, markersize&#x3D;8)</p>
+<p>#education &#x3D; list(grouped_avg_salary.index)  # character列表<br>#avg_salaries &#x3D; list(grouped_avg_salary.values)  # 平均salary列表<br>#plt.figure(figsize&#x3D;(10, 6))<br>#plt.plot(education, avg_salaries, marker&#x3D;’o’, linestyle&#x3D;’-‘, markersize&#x3D;8)</p>
+<p>#设置X轴和Y轴的标签<br>plt.xlabel(‘学历’)<br>plt.ylabel(‘平均薪资’)<br>plt.title(‘平均薪资随学历变化’)<br>#x轴按照顺序<br>plt.xticks(ticks&#x3D;range(len(labels)), labels&#x3D;labels, rotation&#x3D;45)<br>#显示图形<br>plt.tight_layout()  # 调整布局以适应标签<br>plt.show()</p>
+<h1 id="5"><a href="#5" class="headerlink" title="5"></a>5</h1><p>#定义一个映射字典，将原始经验数据映射为指定的标签<br>experience_mapping &#x3D; {<br>    ‘3-5年’: ‘3-5年’,’1-3年’: ‘1-3年’,’5-10年’: ‘5-10年’,’经验不限’: ‘经验不限’,’无经验’: ‘经验不限’,}<br>df[‘experience_label’] &#x3D; df[‘experience’].map(experience_mapping) #将experience字段的值映射到新的列<br>grouped_avg_salary &#x3D; df.groupby(‘experience_label’)[‘average_salary’].mean()<br>labels_with_avg &#x3D; [f”{label} (平均薪资：{int(salary)} )” for label, salary in zip(grouped_avg_salary.index, grouped_avg_salary.values)]<br>plt.pie(grouped_avg_salary.values, labels&#x3D;labels_with_avg, autopct&#x3D;’%1.1f%%’, startangle&#x3D;140)</p>
+<p>#experience_labels &#x3D; list(grouped_avg_salary.index)  # character列表<br>#avg_salaries &#x3D; list(grouped_avg_salary.values)  # 平均salary列表<br>#experience_labels &#x3D; grouped_avg_salary[‘experience_label’]  # 经验标签列表<br>#avg_salaries &#x3D; grouped_avg_salary[‘average_salary’]  # 对应的平均薪资列表<br>##创建带有平均薪资的标签<br>#labels_with_avg &#x3D; [f”{label} (平均薪资：{int(salary)} )” for label, salary in zip(experience_labels, avg_salaries)]<br>#绘制饼状图<br>plt.figure(figsize&#x3D;(12, 8))  # 设置图形大小<br>plt.pie(grouped_avg_salary.values, labels&#x3D;labels_with_avg, autopct&#x3D;’%1.1f%%’, startangle&#x3D;140)<br>#plt.pie(avg_salaries, labels&#x3D;labels_with_avg, autopct&#x3D;’%1.1f%%’, startangle&#x3D;140)<br>#设置图形标题<br>plt.title(‘不同工作经验占比及其平均薪资’)<br>#显示图形<br>plt.show()</p>
+<p>#根据经验标签分组并计算每个组的平均薪资<br>#grouped_avg_salary &#x3D; df.groupby(‘experience_label’)[‘average_salary’].mean().reset_index()</p>
+<h1 id="6"><a href="#6" class="headerlink" title="6"></a>6</h1><p>df[‘scale’] &#x3D; df[‘scale’].apply(ast.literal_eval)<br>df[‘average_scale’] &#x3D; df[‘scale’].apply(lambda x: sum(x) &#x2F; len(x)) #计算平均值<br>grouped_avg_scale &#x3D; df.groupby(‘character’)[‘average_scale’].mean() #分组计算<br>characters &#x3D; list(grouped_avg_scale.index)  # character 列表<br>avg_scale &#x3D; list(grouped_avg_scale.values)  # 平均 scale 列表<br>plt.figure(figsize&#x3D;(12, 6))  # 设置图形大小<br>plt.bar(characters, avg_scale, color&#x3D;’skyblue’)</p>
+<p>#设置 X 轴和 Y 轴的标签<br>plt.xlabel(‘公司性质’)<br>plt.ylabel(‘平均规模数’)<br>plt.title(‘不同公司性质平均人数规模’)</p>
+<p>#显示图形<br>plt.show()</p>
 
         </div>
 
@@ -703,7 +726,7 @@
         
             <li>
                 <strong>更新于
-                    :</strong> 2024-10-11 16:18:24
+                    :</strong> 2024-10-11 16:29:39
             </li>
         
         <li>
@@ -804,7 +827,7 @@
     <div class="post-toc">
         <div class="toc-title">目录</div>
         <div class="page-title">pachong</div>
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1"><span class="nav-text">1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2"><span class="nav-text">2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3"><span class="nav-text">3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4"><span class="nav-text">4</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-1"><span class="nav-text">1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-1"><span class="nav-text">2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-1"><span class="nav-text">3</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1"><span class="nav-text">1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2"><span class="nav-text">2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3"><span class="nav-text">3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4"><span class="nav-text">4</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C"><span class="nav-text">二</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-1"><span class="nav-text">1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-1"><span class="nav-text">2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-1"><span class="nav-text">3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89"><span class="nav-text">三</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-2"><span class="nav-text">1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-2"><span class="nav-text">2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-2"><span class="nav-text">3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B"><span class="nav-text">四</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-3"><span class="nav-text">1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-3"><span class="nav-text">2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-3"><span class="nav-text">3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-1"><span class="nav-text">4</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5"><span class="nav-text">5</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6"><span class="nav-text">6</span></a></li></ol>
 
     </div>
 </div>
